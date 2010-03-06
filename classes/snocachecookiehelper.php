@@ -9,9 +9,10 @@ class sNoCacheCookieHelper
 
 	static public function setCookie()
 	{
+		eZDebug::writeError('setCookie', 'sNoCacheCookieHelper::setCookie');
 		$ini   = eZINI::instance( 'snocachecookie.ini' );
 		$hasUserData = false;
-		$displayedData = $ini->variable( 'NoCacheCookieSettings', 'DisplayedData' ) || array();
+		$displayedData = $ini->variable( 'NoCacheCookieSettings', 'DisplayedData' );
 		$cookieValue = $ini->variable( 'NoCacheCookieSettings', 'CookieValue' ) || 'true';
 		if ( $cookieValue === true )
 		{
@@ -38,7 +39,7 @@ class sNoCacheCookieHelper
 			}
 		}
 		
-		if ( ( $hasUserData === false || $useDetailedValue ) && in_array('wishlist', $displayedData) )
+		if ( ( !$hasUserData || $useDetailedValue ) && in_array('wishlist', $displayedData) )
 		{
 			$user = eZUser::currentUser();
 			$userID = $user->attribute( 'contentobject_id' );
@@ -60,7 +61,7 @@ class sNoCacheCookieHelper
 			}
 		}
 		
-		if ( $hasUserData === false || $useDetailedValue )
+		if ( !$hasUserData || $useDetailedValue )
 		{
 			$prefs = eZPreferences::values();
 			$hasPrefs = false;
@@ -76,11 +77,14 @@ class sNoCacheCookieHelper
 							
 							if ( $useDetailedValue )
 							{
-								if ( !$hasPrefs )
+								if ( in_array('preferences', $displayedData) && !$hasPrefs  )
 								{
 									$detailedValue .= ',preferences';
 								}
-								$detailedValue .= ",$key:$val";
+								if ( in_array($key, $displayedData) )
+								{
+									$detailedValue .= ",$key:$val";
+								}
 							}
 							$hasPrefs = true;
 						}
@@ -90,7 +94,7 @@ class sNoCacheCookieHelper
 		}
 		
 		
-		$value  = ( $hasUserData !== false ) ? $cookieValue . $detailedValue : false;
+		$value  = ( $hasUserData ) ? $cookieValue . $detailedValue : false;
 		
 		$wwwDir = eZSys::wwwDir();
 	    $cookiePath = $wwwDir != '' ? $wwwDir : '/';
