@@ -1,12 +1,12 @@
 <?php
 
-class sNoCacheCookieType extends eZWorkflowEventType
+class sCacheCookieType extends eZWorkflowEventType
 {
-    const WORKFLOW_TYPE_STRING = 'snocachecookie';
-    const WORKFLOW_TYPE_CLASS = 'sNoCacheCookieType';
-    const WORKFLOW_TYPE_DESC = 'Update No Cache Cookie';
+    const WORKFLOW_TYPE_STRING = 'scachecookie';
+    const WORKFLOW_TYPE_CLASS = 'sCacheCookieType';
+    const WORKFLOW_TYPE_DESC = 'Update Cache Cookie';
     
-    function sNoCacheCookieType()
+    function __construct()
     {
         $this->eZWorkflowEventType( self::WORKFLOW_TYPE_STRING,  self::WORKFLOW_TYPE_DESC );
         $this->setTriggerTypes( array( 'user' =>  array(  'preferences' => array( 'before', 'after' ) ),
@@ -18,12 +18,12 @@ class sNoCacheCookieType extends eZWorkflowEventType
 
     function execute( $process, $event )
     {
-        sNoCacheCookieHelper::setCookie();
+        sCacheCookieHelper::setCookie();
         
         return eZWorkflowType::STATUS_ACCEPTED;
     }
 }
 
-eZWorkflowEventType::registerEventType( sNoCacheCookieType::WORKFLOW_TYPE_STRING, sNoCacheCookieType::WORKFLOW_TYPE_CLASS );
+eZWorkflowEventType::registerEventType( sCacheCookieType::WORKFLOW_TYPE_STRING, sCacheCookieType::WORKFLOW_TYPE_CLASS );
 
 ?>

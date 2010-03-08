@@ -1,0 +1,1 @@
+Set a cookie when a user has basket, wishlist or preferences set, to use in proxy cache configuration

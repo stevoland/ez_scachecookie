@@ -8,7 +8,7 @@ AvailableOperationList[]=shop_addtobasket
 AvailableOperationList[]=shop_updatebasket
 
 [EventSettings]
-ExtensionDirectories[]=_snocachecookie
-AvailableEventTypes[]=event_snocachecookie
+ExtensionDirectories[]=_scachecookie
+AvailableEventTypes[]=event_scachecookie
 
 */ ?>

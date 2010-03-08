@@ -1,6 +1,6 @@
 <?php
 
-class sNoCacheCookieHelper
+class sCacheCookieHelper
 {
 
     private function __construct()
@@ -9,16 +9,15 @@ class sNoCacheCookieHelper
 
 	static public function setCookie()
 	{
-		eZDebug::writeError('setCookie', 'sNoCacheCookieHelper::setCookie');
-		$ini   = eZINI::instance( 'snocachecookie.ini' );
+		$ini = eZINI::instance( 'scachecookie.ini' );
 		$hasUserData = false;
-		$displayedData = $ini->variable( 'NoCacheCookieSettings', 'DisplayedData' );
-		$cookieValue = $ini->variable( 'NoCacheCookieSettings', 'CookieValue' ) || 'true';
+		$displayedData = $ini->variable( 'CacheCookieSettings', 'DisplayedData' );
+		$cookieValue = $ini->variable( 'CacheCookieSettings', 'CookieValue' ) || 'true';
 		if ( $cookieValue === true )
 		{
 			$cookieValue = 'true';
 		}
-		$useDetailedValue = ( $ini->variable( 'NoCacheCookieSettings', 'DetailedCookieValue' ) == 'enabled' );
+		$useDetailedValue = ( $ini->variable( 'CacheCookieSettings', 'DetailedCookieValue' ) == 'enabled' );
 		$detailedValue = '';
 
 		if ( in_array('basket', $displayedData) )
@@ -98,9 +97,9 @@ class sNoCacheCookieHelper
 		
 		$wwwDir = eZSys::wwwDir();
 	    $cookiePath = $wwwDir != '' ? $wwwDir : '/';
-        setcookie( $ini->variable( 'NoCacheCookieSettings', 'CookieName' ),
+        setcookie( $ini->variable( 'CacheCookieSettings', 'CookieName' ),
                    $value,
-                   (int)$ini->variable( 'NoCacheCookieSettings', 'CookieDuration' ),
+                   (int)$ini->variable( 'CacheCookieSettings', 'CookieDuration' ),
                    $cookiePath );
 
 	}

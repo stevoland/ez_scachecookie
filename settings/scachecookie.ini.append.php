@@ -1,6 +1,6 @@
 <?php /*
 
-[NoCacheCookieSettings]
+[CacheCookieSettings]
 CookieName=has_user_data
 CookieDuration=0
 # Value of cookie when at least one of DisplayedData[] is set
