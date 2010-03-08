@@ -10,6 +10,7 @@ class sCacheCookieHelper
 	static public function setCookie()
 	{
 		$ini = eZINI::instance( 'scachecookie.ini' );
+		$siteIni = eZINI::instance( 'site.ini' );
 		$hasUserData = false;
 		$displayedData = $ini->variable( 'CacheCookieSettings', 'DisplayedData' );
 		$cookieValue = $ini->variable( 'CacheCookieSettings', 'CookieValue' ) || 'true';
@@ -99,7 +100,7 @@ class sCacheCookieHelper
 	    $cookiePath = $wwwDir != '' ? $wwwDir : '/';
         setcookie( $ini->variable( 'CacheCookieSettings', 'CookieName' ),
                    $value,
-                   (int)$ini->variable( 'CacheCookieSettings', 'CookieDuration' ),
+                   time() + (int)$siteIni->variable( 'Session', 'SessionTimeout' ),
                    $cookiePath );
 
 	}
